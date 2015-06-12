@@ -912,12 +912,12 @@ function SystemLoader() {
 }
 
 // NB no specification provided for System.paths, used ideas discussed in https://github.com/jorendorff/js-loaders/issues/25
-function applyPaths(paths, name) {
+function applyPaths(loader, name) {
   // most specific (most number of slashes in path) match wins
   var pathMatch = '', wildcard, maxSlashCount = 0;
 
   // check to see if we have a paths entry
-  for (var p in paths) {
+  for (var p in loader.paths) {
     var pathParts = p.split('*');
     if (pathParts.length > 2)
       throw new TypeError('Only one wildcard in a path is permitted');
@@ -942,7 +942,7 @@ function applyPaths(paths, name) {
     }
   }
 
-  var outPath = paths[pathMatch] || name;
+  var outPath = loader.paths[pathMatch] || name;
   if (wildcard)
     outPath = outPath.replace('*', wildcard);
 

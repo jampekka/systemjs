@@ -137,3 +137,37 @@ dist/system-polyfills.src.js: lib/*.js $(ESML)/*.js
 		node_modules/when/es6-shim/Promise.js \
 		lib/polyfills-bootstrap.js \
 	>> $@;
+
+dist/system.browserify.src.js: lib/*.js $(ESML)/*.js
+	@echo "$$BANNER" > $@;
+	cat \
+		lib/wrapper-start.js \
+		$(ESML)/wrapper-start.js \
+			$(ESML)/loader.js \
+			$(ESML)/dynamic-only.js \
+			$(ESML)/system.js \
+			$(ESML)/system-fetch.js \
+			$(ESML)/transpiler.js \
+				lib/global-eval.js \
+				lib/proto.js \
+				lib/core.js \
+				lib/scriptLoader.js \
+				lib/register.js \
+				lib/esm.js \
+				lib/global.js \
+				lib/global-helpers.js \
+				lib/cjs.js \
+				lib/map.js \
+				lib/paths.js \
+				lib/package.js \
+				lib/plugins.js \
+				lib/alias.js \
+				lib/meta.js \
+				lib/bundles.js \
+				lib/depCache.js \
+				lib/conditionals.js \
+				lib/createSystem.js \
+		$(ESML)/wrapper-end.js \
+		lib/wrapper-end.js \
+	>> $@;
+
